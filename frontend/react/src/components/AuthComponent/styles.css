@@ -1,0 +1,138 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: transparent;
+  }
+  
+  .login-box {
+    color: black;
+    width: 50vw;
+    height: 65vh;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    
+  }
+  
+  .login-box form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .login-box input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: white ;
+   
+    color:black
+  }
+    .login-box label{
+        color: black;
+        display: flex;
+        flex-direction: column;
+        width: 1;
+    }
+    .login-box .buttons{
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        justify-content: space-between;
+        
+    }
+  .login-box button {
+    
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 90px;
+  }
+  
+  button:hover {
+    background: #0056b3;
+  }
+  
+  .login-box .left {
+    flex: 1;
+    background-image: url("../../../public/crew-22235-977c1e39433a4d25854cb58924179eb1.jpg");
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+  }
+  .login-box .right{
+    flex:2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    height: 80%;
+  }
+  .right-content{
+    width: 80%;
+    height: 100%;
+
+  }
+  .login-box hr{
+    width: 100%;
+    opacity: 10%;
+    margin-top: 10px;
+  }
+  .numbers{
+    display: flex;
+    gap: 4px;
+    margin-right:auto ;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 100;
+    
+  }
+  .number{
+    background-color: rgb(226, 226, 226);
+    color:white;
+    width: 1.5vw;
+    height: 1.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+   
+  }
+  .selected-number{
+    background-color: var(--primary-color);
+  }
+  @media (max-width: 768px) {
+    .login-box {
+      width: 80vw;
+      height: 60vh;
+    }
+    .left{
+        display: none;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .login-box {
+      width: 90vw;
+      height: 70vh;
+    }
+  }
+  
