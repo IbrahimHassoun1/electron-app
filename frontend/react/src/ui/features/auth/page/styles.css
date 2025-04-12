@@ -4,7 +4,7 @@
     align-items: center;
     height: 100vh;
     width: 100vw;
-    background-color: transparent;
+    background-color: #E1DDCC;
   }
   
   .login-box {
@@ -54,7 +54,7 @@
   .login-box button {
     
     padding: 10px;
-    background: #007bff;
+    background: var(--primary-color);
     color: white;
     border: none;
     border-radius: 5px;
@@ -69,7 +69,7 @@
   
   .login-box .left {
     flex: 1;
-    background-image: url("../../../public/crew-22235-977c1e39433a4d25854cb58924179eb1.jpg");
+    background-image: url("../../../public/w08201-small.jpg");
     height: 100%;
     background-position: center;
     background-size: cover;
@@ -118,6 +118,16 @@
   }
   .selected-number{
     background-color: var(--primary-color);
+  }
+  .right-content span{
+    cursor: pointer;
+    color:blue;
+  }
+  .right-content p{
+    text-align: center;
+  }
+  .w-full{
+    width: 100%;
   }
   @media (max-width: 768px) {
     .login-box {

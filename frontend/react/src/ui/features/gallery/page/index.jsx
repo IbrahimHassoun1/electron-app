@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import ImageCard from '../ImageCard';
+import { useNavigate } from 'react-router-dom';
+import ImageCard from '../components/ImageCard';
 import './styles.css';
 
 const HomeComponent = () => {
@@ -10,25 +11,42 @@ const HomeComponent = () => {
       description: 'This is a description of Image 1',
     },
     {
-      imageUrl: '/public/images (1).jpg',
-      title: 'Image 2',
-      description: 'This is a description of Image 2',
+      imageUrl: '/public/images.jpg',
+      title: 'Image 1',
+      description: 'This is a description of Image 1',
     },
     {
-      imageUrl: 'https://via.placeholder.com/250',
-      title: 'Image 3',
-      description: 'This is a description of Image 3',
+      imageUrl: '/public/images.jpg',
+      title: 'Image 1',
+      description: 'This is a description of Image 1',
     },
     {
-      imageUrl: 'https://via.placeholder.com/250',
-      title: 'Image 3',
-      description: 'This is a description of Image 3',
+      imageUrl: '/public/images.jpg',
+      title: 'Image 1',
+      description: 'This is a description of Image 1',
     },
     {
-      imageUrl: 'https://via.placeholder.com/250',
-      title: 'Image 3',
-      description: 'This is a description of Image 3',
+      imageUrl: '/public/images.jpg',
+      title: 'Image 1',
+      description: 'This is a description of Image 1',
     },
+    {
+      imageUrl: '/public/images.jpg',
+      title: 'Image 1',
+      description: 'This is a description of Image 1',
+    },
+    {
+      imageUrl: '/public/images.jpg',
+      title: 'Image 1',
+      description: 'This is a description of Image 1',
+    },
+    {
+      imageUrl: '/public/images.jpg',
+      title: 'Image 1',
+      description: 'This is a description of Image 1',
+    },
+    
+   
   ]);
 
   const [newImage, setNewImage] = useState({
@@ -54,12 +72,23 @@ const HomeComponent = () => {
       alert('Please fill in all fields');
     }
   };
-
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem('access_token');
+    navigate('/')
+  }
   return (
-    <div>
-      <button className="add-button" onClick={() => document.getElementById('add-image-form').style.display = 'block'}>
-        Add New Image
-      </button>
+    <div className='limiter'>
+      <div className="top-buttons">
+        <button className="add-button" onClick={() => document.getElementById('add-image-form').style.display = 'block'}>
+          Add New Image
+        </button>
+        <button className="add-button" onClick={() => logout()}>
+        Logout
+        </button>
+        
+      </div>
+      
       <div className="gallery">
         {images.map((image, index) => (
           <ImageCard
