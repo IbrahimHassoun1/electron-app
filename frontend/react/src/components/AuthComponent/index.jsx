@@ -8,12 +8,13 @@ const AuthComponent = () => {
     data, 
     login,
     submit,
+    handleGoogleLogin,
     back,handleChange,switchRegLog} = useAuthLogic()
   return (
     <div className="container">
       <div className="login-box">
         <div className="left">
-          <button>Google</button>
+          <button onClick={handleGoogleLogin}>Google</button>
         </div>
         <div className="right">
           <div className="right-content">
@@ -78,7 +79,7 @@ const AuthComponent = () => {
               }
               
           
-          {registerOrLogin=='register'?<p>Already have account? <span onClick={()=>switchRegLog()}>Login</span></p>:''}
+          {registerOrLogin=='register'?<p>Already have account? <span onClick={()=>switchRegLog()}>Login</span></p>:<p>Don't have an account? <span onClick={()=>switchRegLog()}>Signup</span></p>}
           </div>
         </div>
       

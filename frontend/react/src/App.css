@@ -9,3 +9,8 @@ input:-webkit-autofill {
 :root{
   --primary-color:#007bff;
 }
+.app-component{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
