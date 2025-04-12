@@ -8,6 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Providers\AuthServicesProvider;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Exception;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
@@ -24,12 +25,15 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         try {
+            DB::beginTransaction();
             $response = AuthServicesProvider::signup($request->all());
-            return response()->json(['success' => 'true', 'message' => 'Logged in Successfully', 'data' => $response], 201);
+            DB::commit();
+            return response()->json(['success' => 'true', 'message' => 'Registered Successfully', 'data' => $response], 201);
         } catch (Exception $e) {
+            DB::rollBack();
             return response()->json([
                 'success' => 'false',
-                'message' => $e,
+                'message' => $e->getMessage(),
                 'data' => null
             ], 400);
         }
@@ -39,7 +43,6 @@ class AuthController extends Controller
     {
 
         try {
-
             $result = AuthServicesProvider::login($request->all());
             return response()->json([
                 'success' => 'true',
@@ -47,9 +50,10 @@ class AuthController extends Controller
                 'data' => $result
             ], 200);
         } catch (Exception $e) {
+
             return response()->json([
                 'success' => 'false',
-                'message' => 'Error during login',
+                'message' => $e->getMessage(),
                 'data' => null
             ], 400);
         }
