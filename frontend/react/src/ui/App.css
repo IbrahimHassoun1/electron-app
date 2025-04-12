@@ -7,10 +7,15 @@ input:-webkit-autofill {
   color: black !important;
 }
 :root{
-  --primary-color:#007bff;
+  --primary-color:#180F0E;
 }
 .app-component{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.limiter{
+  max-width:1240px ;
+  margin-left: auto;
+  margin-right: auto;
 }

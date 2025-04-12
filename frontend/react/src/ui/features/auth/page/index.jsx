@@ -67,13 +67,13 @@ const AuthComponent = () => {
               </div>
             </form>
               :<form onSubmit={login}>
-              <label htmlFor="email"> Email<input value={data.email} type="email" placeholder="example@email.com" name="email" id="email" onChange={(e)=>handleChange(e)}required/></label>
+              <label className='w-full' htmlFor="email"> Email<input value={data.email} type="email" placeholder="example@email.com" name="email" id="email" onChange={(e)=>handleChange(e)}required/></label>
              
-              <label htmlFor="password"> Password<input value={data.password} type="password" placeholder="*******" name="password" id="password" onChange={(e)=>handleChange(e)} required/></label>
+              <label className='w-full' htmlFor="password"> Password<input value={data.password} type="password" placeholder="*******" name="password" id="password" onChange={(e)=>handleChange(e)} required/></label>
              
               <div className="buttons">
               <button className="back-button" onClick={(e)=>back(e)}>Back</button>
-              <button type="submit" >Signup</button>
+              <button type="submit" >Login</button>
               </div>
             </form>
               }

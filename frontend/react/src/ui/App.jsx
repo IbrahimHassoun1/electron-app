@@ -1,7 +1,7 @@
 import './App.css'
-import AuthComponent from './components/AuthComponent'
+import AuthComponent from './features/auth/page'
 import { HashRouter, Routes, Route } from "react-router-dom";
-import HomeComponent from './components/Home';
+import HomeComponent from './features/gallery/page';
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
           <Route path='/home' element={<HomeComponent/>}/>
         </Routes>
       </HashRouter>
-      
+
     </div>
   )
 }

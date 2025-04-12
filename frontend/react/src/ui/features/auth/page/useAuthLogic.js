@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import requestMethods from "../../utils/enums/request.methods.js"
-import request from "../../utils/remote/axios.js";
+import request from "../../../../core/remote/axios.js";
 import  {  useState } from "react";
 
 const AuthLogic = () => {
@@ -24,7 +23,7 @@ const AuthLogic = () => {
     e.preventDefault()
     
       const response = await request({
-        method:requestMethods.POST,
+        method:"POST",
         route:"api/v0.1/login",
         body: {
           ...data
@@ -45,7 +44,7 @@ const AuthLogic = () => {
     }else if(step==3){
      
       const response = await request({
-        method:requestMethods.POST,
+        method:"POST",
         route:"api/v0.1/register",
         body: {
           ...data
@@ -79,7 +78,7 @@ const AuthLogic = () => {
   const handleGoogleLogin = async() =>{
     try{
       const response = await request({
-        method:requestMethods.GET,
+        method:"GET",
         route:'login/google',
       })
       console.log(response)

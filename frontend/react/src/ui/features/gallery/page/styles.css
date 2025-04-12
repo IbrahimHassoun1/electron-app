@@ -7,9 +7,14 @@
   height: 100%;
   color:white;
 }
-
+.top-buttons{
+  display: flex;
+  gap: 5px;
+  justify-content: end;
+  
+}
 .add-button {
-  margin-top: 20px;
+
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -66,8 +71,4 @@
 
 .add-image-form button[type="button"]:hover {
   background-color: #c82333;
-}
-.add-button{
-  margin-left: auto;
-  margin-right: auto;
 }
