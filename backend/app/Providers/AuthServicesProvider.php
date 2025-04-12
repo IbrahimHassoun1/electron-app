@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use Exception;
 use App\Models\User;
+use App\Models\Address;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use function PHPUnit\Framework\throwException;
+use App\Http\Controllers\AddressController;
 
 
 
@@ -23,39 +25,66 @@ class AuthServicesProvider extends ServiceProvider
 
     public static function signup($userData)
     {
-        try {
-            $userData['password'] = bcrypt($userData['password']);
-            $user = User::create($userData);
-            $user['token'] = JWTAuth::fromUser($user);
-            return $user;
-        } catch (\Illuminate\Database\QueryException $e) {
-            throw new Exception("Database error during signup: " . $e->getMessage());
-        } catch (Exception $e) {
-            throw new Exception("Error during signup: " . $e->getMessage());
+
+        //hash password
+        $userData['password'] = bcrypt($userData['password']);
+        if (!$userData['password']) {
+            throw new Exception("Hashing failed");
         }
+        //create user
+        $user = User::create($userData);
+        if (!$user) {
+            throw new Exception("Couldn't create user ");
+        }
+        //create address
+        $address = AddressController::createAddress($userData);
+        if ($address['success'] == false) {
+            throw new Exception('Failed to create address');
+        }
+        // Save address ID to user's record
+        $user->address_id = $address['data']['id'];
+        $user->save();
+        //generate token
+        $user['token'] = JWTAuth::fromUser($user);
+        if (!$user['token']) {
+            throw new Exception("Token generation failed");
+        }
+        //assign address to user
+        $user['address'] = $address['data'];
+        return $user;
+
 
     }
 
     public static function login($userData)
     {
-        try {
 
-            if (!$token = JWTAuth::attempt($userData)) {
-                throwException("Invalid email or password");
-                // return response()->json([
-                //     "message" => "Invalid email or password",
-                // ], 401);
-            }
-
-            $user = JWTAuth::user();
-            $user['token'] = $token;
-            return $user;
-        } catch (Exception $e) {
-            return response()->json([
-                "message" => "error: " . $e->getMessage(),
-            ]);
+        $credentials = [
+            'email' => $userData['email'] ?? null,
+            'password' => $userData['password'] ?? null,
+        ];
+        if (!$credentials['email'] || !$credentials['password']) {
+            throw new Exception("Email and password are required");
         }
+        if (!$token = JWTAuth::attempt($credentials)) {
+            throwException("Invalid email or password");
+            // return response()->json([
+            //     "message" => "Invalid email or password",
+            // ], 401);
+        }
+
+        $user = JWTAuth::user();
+        $user['token'] = $token;
+        // Retrieve the user's address
+        $address = Address::find($user->address_id);
+        if (!$address) {
+            throw new Exception("Failed to retrieve address");
+        }
+        // Assign the address to the user
+        $user['address'] = $address;
+        return $user;
     }
+
 
     public static function OAuth2($googleUser)
     {

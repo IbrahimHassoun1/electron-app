@@ -19,9 +19,7 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('street');
-            $table->string('city');
-            $table->string('country');
+            $table->foreignId('address_id')->nullable()->constrained('addresses')->nullOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -19,6 +19,7 @@ const AuthLogic = () => {
     password_confirmation:""
   });
   const navigate = useNavigate()
+
   const login = async (e) =>{
     e.preventDefault()
     
@@ -36,6 +37,7 @@ const AuthLogic = () => {
       }
       console.log(response)
     }
+
   const submit = async (e) =>{
     e.preventDefault()
     if(step<3){
@@ -56,6 +58,7 @@ const AuthLogic = () => {
       console.log(response)
     }
   }
+  
   const back = (e) =>{
     e.preventDefault()
     setStep(step-1)
@@ -73,14 +76,25 @@ const AuthLogic = () => {
       SetRegisterOrLogin('register')
     }
   }
- 
+  const handleGoogleLogin = async() =>{
+    try{
+      const response = await request({
+        method:requestMethods.GET,
+        route:'login/google',
+      })
+      console.log(response)
+    }catch(error){
+      console.log(error)
+    }
+  }
   return {
     registerOrLogin,SetRegisterOrLogin,
     step,setStep,
     data, setData,
     login,
     submit,
-    back,handleChange,switchRegLog
+    back,handleChange,switchRegLog,
+    handleGoogleLogin
 }
 }
 
