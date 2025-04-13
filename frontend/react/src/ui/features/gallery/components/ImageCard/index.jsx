@@ -1,20 +1,32 @@
-import React from 'react';
-import './styles.css'
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
-const ImageCard = ({ imageUrl, title, description, onDelete }) => {
-    const Delete = () => {
-        
-    }
-    return (
-      <div className="image-card">
-        <img src={imageUrl} alt={title} className="image" />
-        <h3 className="title">{title}</h3>
-        <p className="description">{description}</p>
-        <button className="delete-button" onClick={Delete}>
-          Delete
-        </button>
-      </div>
-    );
-  };
-
-export default ImageCard;
+export default function ImageCard({image,title,description}) {
+  return (
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        component="img"
+        alt={title}
+        height="140"
+        image={image}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {title}
+        </Typography>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">Share</Button>
+        <Button size="small">Learn More</Button>
+      </CardActions>
+    </Card>
+  );
+}

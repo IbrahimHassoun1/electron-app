@@ -13,9 +13,11 @@ input:-webkit-autofill {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
 }
 .limiter{
   max-width:1240px ;
   margin-left: auto;
   margin-right: auto;
+  overflow-x: hidden;
 }
