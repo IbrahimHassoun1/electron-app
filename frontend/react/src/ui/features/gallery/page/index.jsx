@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
 import ImageCard from '../components/ImageCard';
+import {hidePopup,displayPopup} from '../../../../lib/redux/Gallery/slice.js'
 import './styles.css';
 
 const HomeComponent = () => {
+  const dispatch = useDispatch();
+  const galleryState = useSelector((global) => global.gallery);
   const [images, setImages] = useState([
     {
-      imageUrl: '/public/images.jpg',
+      imageUrl: '/public/crew-22235-977c1e39433a4d25854cb58924179eb1.jpg',
       title: 'Image 1',
       description: 'This is a description of Image 1',
     },
@@ -48,7 +52,9 @@ const HomeComponent = () => {
     
    
   ]);
-
+  useEffect(()=>{
+    console.log(galleryState)
+  },[galleryState])
   const [newImage, setNewImage] = useState({
     imageUrl: '',
     title: '',
@@ -80,13 +86,12 @@ const HomeComponent = () => {
   return (
     <div className='limiter'>
       <div className="top-buttons">
-        <button className="add-button" onClick={() => document.getElementById('add-image-form').style.display = 'block'}>
+        <button className="add-button" onClick={() => dispatch(displayPopup({}))}>
           Add New Image
         </button>
         <button className="add-button" onClick={() => logout()}>
-        Logout
+          Logout
         </button>
-        
       </div>
       
       <div className="gallery">
@@ -102,7 +107,7 @@ const HomeComponent = () => {
 
       
 
-      <div id="add-image-form" className="add-image-form">
+      <div id="add-image-form" className={`add-image-form ${galleryState.AddImagePopup ? 'block' : 'hidden'}`}>
         <form onSubmit={handleAddImage}>
           <input
             type="text"
@@ -129,7 +134,7 @@ const HomeComponent = () => {
           />
           <button type="submit">Add Image</button>
         </form>
-        <button  onClick={() => document.getElementById('add-image-form').style.display = 'none'}>Cancel</button>
+        <button  onClick={() => dispatch(hidePopup({}))}>Cancel</button>
       </div>
     </div>
   );
