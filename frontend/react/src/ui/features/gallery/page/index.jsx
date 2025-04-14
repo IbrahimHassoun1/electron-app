@@ -10,7 +10,7 @@ const HomeComponent = () => {
   const galleryState = useSelector((global) => global.gallery);
   const [images, setImages] = useState([
     {
-      imageUrl: '/public/crew-22235-977c1e39433a4d25854cb58924179eb1.jpg',
+      imageUrl: 'crew-22235-977c1e39433a4d25854cb58924179eb1.jpg',
       title: 'Image 1',
       description: 'This is a description of Image 1',
     },
@@ -86,12 +86,20 @@ const HomeComponent = () => {
   return (
     <div className='limiter'>
       <div className="top-buttons">
-        <button className="add-button" onClick={() => dispatch(displayPopup({}))}>
-          Add New Image
-        </button>
-        <button className="add-button" onClick={() => logout()}>
-          Logout
-        </button>
+        <div className="top-left-buttons">
+          <button className="add-button" onClick={() => navigate('/chats')}>
+            Chat
+          </button>
+        </div>
+        <div className="top-right-buttons">
+          <button className="add-button" onClick={() => dispatch(displayPopup({}))}>
+            Add New Image
+          </button>
+          <button className="add-button" onClick={() => logout()}>
+            Logout
+          </button>
+        </div>
+        
       </div>
       
       <div className="gallery">
