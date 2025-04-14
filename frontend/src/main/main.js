@@ -1,11 +1,4 @@
 import {app,BrowserWindow,screen} from "electron"
-import path from "path"
-import { fileURLToPath } from "url"
-// import registerIpcHandlers from "./src/main/ipcHandlers.js"
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 
 const loadWindow = () =>{
     const {width,height} = screen.getPrimaryDisplay().bounds
@@ -13,8 +6,8 @@ const loadWindow = () =>{
         width,
         height,
         webPreferences: {
-          preload: path.join(__dirname, 'preload.js'),
-        },
+      preload: path.join(__dirname, "../preload/preload.js"),
+    },
         contextIsolation: true, 
         nodeIntegration: false,
     })
@@ -26,6 +19,7 @@ const loadWindow = () =>{
 app.whenReady().then(() => {
     loadWindow();
     registerIpcHandlers();
+
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) loadWindow();
     });

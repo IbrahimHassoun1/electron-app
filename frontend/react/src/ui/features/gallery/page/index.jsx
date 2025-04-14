@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Buffer } from 'buffer';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ImageCard from '../components/ImageCard';
-import {hidePopup,displayPopup} from '../../../../lib/redux/Gallery/slice.js'
+import { hidePopup, displayPopup } from '../../../../lib/redux/Gallery/slice.js';
 import './styles.css';
 
 const HomeComponent = () => {
+  
   const dispatch = useDispatch();
   const galleryState = useSelector((global) => global.gallery);
   const [images, setImages] = useState([
@@ -19,47 +21,18 @@ const HomeComponent = () => {
       title: 'Image 1',
       description: 'This is a description of Image 1',
     },
-    {
-      imageUrl: '/public/images.jpg',
-      title: 'Image 1',
-      description: 'This is a description of Image 1',
-    },
-    {
-      imageUrl: '/public/images.jpg',
-      title: 'Image 1',
-      description: 'This is a description of Image 1',
-    },
-    {
-      imageUrl: '/public/images.jpg',
-      title: 'Image 1',
-      description: 'This is a description of Image 1',
-    },
-    {
-      imageUrl: '/public/images.jpg',
-      title: 'Image 1',
-      description: 'This is a description of Image 1',
-    },
-    {
-      imageUrl: '/public/images.jpg',
-      title: 'Image 1',
-      description: 'This is a description of Image 1',
-    },
-    {
-      imageUrl: '/public/images.jpg',
-      title: 'Image 1',
-      description: 'This is a description of Image 1',
-    },
-    
-   
+    // ... rest of your static images
   ]);
-  useEffect(()=>{
-    console.log(galleryState)
-  },[galleryState])
+
   const [newImage, setNewImage] = useState({
     imageUrl: '',
     title: '',
     description: '',
   });
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -69,20 +42,59 @@ const HomeComponent = () => {
     }));
   };
 
-  const handleAddImage = (e) => {
-    e.preventDefault();
-    if (newImage.imageUrl && newImage.title && newImage.description) {
-      setImages((prevImages) => [...prevImages, newImage]);
-      setNewImage({ imageUrl: '', title: '', description: '' });
-    } else {
-      alert('Please fill in all fields');
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
     }
   };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  
+    if (!selectedFile || !newImage.title || !newImage.description) {
+      console.log('Please fill in all fields and select an image');
+      return;
+    }
+  
+    const reader = new FileReader();
+  
+    reader.onload = () => {
+      const arrayBuffer = reader.result;
+      const filename = Date.now() + '-' + selectedFile.name;
+      console.log('before try')
+      try {
+        const savedPath = window.api.saveImage(arrayBuffer, filename);
+        console.log('Image saved to', savedPath);
+  
+        setImages((prevImages) => [
+          ...prevImages,
+          {
+            imageUrl: savedPath,
+            title: newImage.title,
+            description: newImage.description,
+          },
+        ]);
+  
+        setNewImage({ imageUrl: '', title: '', description: '' });
+        setSelectedFile(null);
+        dispatch(hidePopup({}));
+      } catch (err) {
+        console.error('Error saving image:', err);
+        alert('Failed to save image.');
+      }
+    };
+  
+    reader.readAsArrayBuffer(selectedFile);
+  };
+  
+
   const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem('access_token');
-    navigate('/')
-  }
+    navigate('/');
+  };
+
   return (
     <div className='limiter'>
       <div className="top-buttons">
@@ -99,9 +111,8 @@ const HomeComponent = () => {
             Logout
           </button>
         </div>
-        
       </div>
-      
+
       <div className="gallery">
         {images.map((image, index) => (
           <ImageCard
@@ -113,16 +124,12 @@ const HomeComponent = () => {
         ))}
       </div>
 
-      
-
       <div id="add-image-form" className={`add-image-form ${galleryState.AddImagePopup ? 'block' : 'hidden'}`}>
-        <form onSubmit={handleAddImage}>
+        <form onSubmit={handleSubmit}>
           <input
-            type="text"
+            type="file"
             name="imageUrl"
-            placeholder="Image URL"
-            value={newImage.imageUrl}
-            onChange={handleInputChange}
+            onChange={handleFileChange}
             required
           />
           <input
@@ -140,9 +147,9 @@ const HomeComponent = () => {
             onChange={handleInputChange}
             required
           />
-          <button type="submit">Add Image</button>
+          <button type="submit" >Add Image</button>
         </form>
-        <button  onClick={() => dispatch(hidePopup({}))}>Cancel</button>
+        <button onClick={() => dispatch(hidePopup({}))}>Cancel</button>
       </div>
     </div>
   );

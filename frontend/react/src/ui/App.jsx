@@ -3,9 +3,13 @@ import AuthComponent from './features/auth/page'
 import { HashRouter, Routes, Route } from "react-router-dom";
 import HomeComponent from './features/gallery/page';
 import ChatPage from './features/chats/page';
+import { useEffect } from 'react';
+
 function App() {
 
-
+useEffect(()=>{
+  console.log("window.api:", window.api);
+},[])
   return (
     <div className='app-component'>
       <HashRouter>
