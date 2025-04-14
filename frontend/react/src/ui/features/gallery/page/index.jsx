@@ -106,7 +106,7 @@ const HomeComponent = () => {
         {images.map((image, index) => (
           <ImageCard
             key={index}
-            imageUrl={image.imageUrl}
+            image={image.imageUrl}
             title={image.title}
             description={image.description}
           />

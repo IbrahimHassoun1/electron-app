@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { Crop ,Layers, Filter, RotateCcw,} from 'lucide-react';
 
 export default function ImageCard({image,title,description}) {
   return (
@@ -12,7 +13,7 @@ export default function ImageCard({image,title,description}) {
       <CardMedia
         component="img"
         alt={title}
-        height="140"
+        height="240"
         image={image}
       />
       <CardContent>
@@ -24,8 +25,19 @@ export default function ImageCard({image,title,description}) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small" startIcon={<Crop size={20} />}  sx={{'&:hover': {color: 'white'}}}>
+          Crop
+        </Button>
+        <Button size="small" startIcon={<Layers size={20} />} sx={{'&:hover': {color: 'white'}}}>
+         Mark
+        </Button>
+        <Button size="small" startIcon={<Filter size={20} />} sx={{'&:hover': {color: 'white'}}}>
+          Filter
+        </Button>
+        <Button size="small" startIcon={<RotateCcw size={20} />} sx={{'&:hover': {color: 'white'}}}>
+          Rotate
+        </Button>
+        
       </CardActions>
     </Card>
   );
