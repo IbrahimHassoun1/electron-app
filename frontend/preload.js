@@ -1,19 +1,15 @@
 const { contextBridge, ipcRenderer } = require('electron');
-const {fs} = require('fs');
-contextBridge.exposeInMainWorld('api', {
-  saveImage: (arrayBuffer, filename) => {
-    const buffer = Buffer.from(arrayBuffer);
-    const dir = path.join(os.homedir(), 'Pictures', 'MyAppImages');
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    const filePath = path.join(dir, filename);
-    fs.writeFileSync(filePath, buffer);
-    return filePath;
-  },
-  onSaveSuccess: (cb) => ipcRenderer.once('save-image-success', (e, path) => cb(path)),
-  onSaveError: (cb) => ipcRenderer.once('save-image-failure', (e, err) => cb(err)),
-  log: (message) => console.log(message),
+
+// Expose protected methods to the renderer process
+contextBridge.exposeInMainWorld('electronAPI', {
+  selectImage: () => ipcRenderer.invoke('dialog:selectImage'),
+  saveImage: (fileName, buffer) => ipcRenderer.invoke('fs:saveImage', fileName, buffer),
+  
+  // For debugging
+  ping: () => ipcRenderer.invoke('ping')
 });
 
-
+// Add this for error handling
+process.once('loaded', () => {
+  console.log('Preload script loaded successfully');
+});

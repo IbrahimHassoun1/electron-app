@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 function App() {
 
 useEffect(()=>{
-  console.log("window.api:", window.api);
+  console.log("window.electronAPI:", window.electronAPI);
 },[])
   return (
     <div className='app-component'>
