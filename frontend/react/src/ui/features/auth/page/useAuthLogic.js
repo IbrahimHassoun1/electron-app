@@ -31,6 +31,8 @@ const AuthLogic = () => {
       })
       if(response.success){
         localStorage.setItem('access_token',response.data.token);
+        localStorage.setItem('user_id',response.data.id);
+        localStorage.setItem('name',response.data.first_name)
         navigate('/home');
         console.log('success')
       }
@@ -52,6 +54,8 @@ const AuthLogic = () => {
       })
       if(response.success){
         localStorage.setItem('access_token',response.data.token)
+        localStorage.setItem('user_id',response.data.id)
+        localStorage.setItem('name',response.data.first_name)
         navigate('/home');
       }
       console.log(response)
