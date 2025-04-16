@@ -26,7 +26,7 @@ class LogController extends Controller
         if(!Log::create($logData)){
             throw new \Exception('Failed to create log entry');
         };
-
+        return true;
 
 
     }
