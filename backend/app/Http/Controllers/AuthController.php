@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Exception;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use App\http\Controllers\LogController;
 
 class AuthController extends Controller
 {
@@ -25,12 +26,12 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         try {
-            DB::beginTransaction();
+           
             $response = AuthServicesProvider::signup($request->all());
-            DB::commit();
+            LogController::addLog(request()->ip(),'register',true,$response['id']);
             return response()->json(['success' => 'true', 'message' => 'Registered Successfully', 'data' => $response], 201);
         } catch (Exception $e) {
-            DB::rollBack();
+            LogController::addLog($request()->ip(),'register',false,null);
             return response()->json([
                 'success' => 'false',
                 'message' => $e->getMessage(),
@@ -44,13 +45,14 @@ class AuthController extends Controller
 
         try {
             $result = AuthServicesProvider::login($request->all());
+            LogController::addLog(request()->ip(),'login',true,$result['id']);
             return response()->json([
                 'success' => 'true',
                 'message' => 'Logged in successfully',
                 'data' => $result
             ], 200);
         } catch (Exception $e) {
-
+            LogController::addLog($request->ip(),'login',false,null);
             return response()->json([
                 'success' => 'false',
                 'message' => $e->getMessage(),

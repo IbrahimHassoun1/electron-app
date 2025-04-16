@@ -67,7 +67,7 @@ class AuthServicesProvider extends ServiceProvider
             throw new Exception("Email and password are required");
         }
         if (!$token = JWTAuth::attempt($credentials)) {
-            throwException("Invalid email or password");
+            throw new Exception("Invalid email or password");
             // return response()->json([
             //     "message" => "Invalid email or password",
             // ], 401);
